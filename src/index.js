@@ -1,81 +1,22 @@
-"use strict";
+'use strict'
 
-let appData = {
-  expenses : {},
-  optionalExpenses: {},
-  income : [],
-  savings: false,
+let numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?');
+
+let personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: '',
+    genres: [],
+    privat: false,
 };
 
-function start() {
-  let money = +prompt('Ваш бюджет на месяц?'),
-      date = prompt('Введите дату в формате YYYY-MM-DD');
-  while (isNaN(money) || money === '' || money === null) {
-    money = +prompt('Ваш бюджет на месяц?');
-  }
-  appData.money = money;
-  appData.date = date;
-}
+function request() {
+    let title = prompt('Один из последних посмотренных фильмов?');
+    let stars = prompt('На сколько оцените его?');
 
-function chooseExpenses() {
-  let ques1 = 'Введите обязательную статью расходов в этом месяце';
-  let ques2 = 'Во сколько обойдется?';
+    personalMovieDB.movies[title] = stars;
 
-  for (let i = 0; i < 2; i++) {
-    let ans1 = prompt(ques1);
-    let ans2 = +prompt(ques2);
-    if (typeof(ans1) === 'string' && typeof(ans1) !== null && typeof(ans2) !== null && 
-        typeof(ans1) !== '' && typeof(ans2) !== '' && ans1.length < 50) {
-      appData.expenses[ans1] = ans2;
-    }
-  }
-}
+    console.log(personalMovieDB);
+};
 
-function chooseOptExpenses() {
-  for (let i = 1; i < 4; i++) {
-    appData.optionalExpenses[i] = prompt('Статья необязательных расходов?');
-  }
-}
-
-function detectDayBudget() {
-  appData.moneyPerDay = (appData.money / 30);
-  alert('Дневной бюджет: ' + appData.moneyPerDay);
-  detectLevel();
-}
-
-function detectLevel() {
-  if (appData.moneyPerDay <= 100) {
-    console.log('Минимальный уровень дохода');
-  }
-  else if (appData.moneyPerDay >100 && appData.moneyPerDay <= 2000) {
-    console.log('Средний уровень дохода');
-  }
-  else if(appData.moneyPerDay > 2000) {
-    console.log('Высокий уровень дохода');
-  }
-  else {
-    console.log('Произошла ошибка');
-  }  
-}
-
-function checkSavings() {
-  let ques1 = 'Какова сумма накоплений?';
-  let ques2 = 'Под какой процент?';
-  if (appData.savings === true) {
-    let sum = +prompt(ques1),
-        percent = +prompt(ques2);
-
-    appData.monthIncome = sum/12/100*percent;
-    alert('Сумма дохода с накоплений в месяц: ' + appData.monthIncome);
-  }
-}
-
-
-start();
-chooseExpenses();
-chooseOptExpenses();
-detectDayBudget();
-checkSavings();
-
-console.log(appData);
-
+request();
